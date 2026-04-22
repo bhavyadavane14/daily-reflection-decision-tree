@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Daily Reflection Chatbot</title>
+<style>
+body {
+  font-family: Arial;
+  background: #0f172a;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.chat-container {
+  width: 400px;
+  background: #1e293b;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.chat-box {
+  height: 300px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+}
+
+.bot, .user {
+  margin: 10px 0;
+}
+
+.bot { color: #38bdf8; }
+.user { text-align: right; color: #facc15; }
+
+input {
+  width: 70%;
+  padding: 10px;
+}
+
+button {
+  padding: 10px;
+  background: #22c55e;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="chat-container">
+  <h2>💬 Daily Reflection Bot</h2>
+  <div class="chat-box" id="chat"></div>
+  <input id="input" placeholder="Type here...">
+  <button onclick="send()">Send</button>
+</div>
+
+<script>
+let step = 0;
+let state = {};
+
+function bot(msg) {
+  document.getElementById("chat").innerHTML += `<div class="bot">🤖 ${msg}</div>`;
+}
+
+function user(msg) {
+  document.getElementById("chat").innerHTML += `<div class="user">🧑 ${msg}</div>`;
+}
+
+function send() {
+  let input = document.getElementById("input").value.toLowerCase();
+  user(input);
+  document.getElementById("input").value = "";
+
+  if(step === 0) {
+    if(!["good","average","bad"].includes(input)) {
+      bot("Please enter: good / average / bad");
+      return;
+    }
+    state.day = input;
+    step = 1;
+
+    if(input === "good") bot("Did you complete tasks? (yes/no)");
+    if(input === "average") bot("Main issue? (energy/distractions/planning)");
+    if(input === "bad") bot("Main reason? (stress/work/personal)");
+  }
+
+  else if(step === 1) {
+    if(state.day === "good") {
+      if(input === "yes") bot("Excellent! Keep consistency 🚀");
+      else bot("Plan better with 3 tasks tomorrow 📅");
+      step = 99;
+    }
+
+    else if(state.day === "average") {
+      if(input === "energy") bot("Sleep well and take breaks 😴");
+      else if(input === "distractions") bot("Reduce phone usage 📱");
+      else bot("Create a daily plan 📝");
+      step = 99;
+    }
+
+    else if(state.day === "bad") {
+      if(input === "stress") bot("Relax and talk to someone 💬");
+      else if(input === "work") bot("Break tasks into smaller parts 📊");
+      else bot("Take rest and self-care ❤️");
+      step = 99;
+    }
+  }
+
+  else {
+    bot("Type 'restart' to begin again.");
+    if(input === "restart") {
+      step = 0;
+      bot("How was your day? (good/average/bad)");
+    }
+  }
+}
+
+// Start
+bot("How was your day? (good/average/bad)");
+</script>
+
+</body>
+</html>
