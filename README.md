@@ -18,4 +18,4 @@ This project is a deterministic decision tree designed to help users reflect on 
 The system asks questions and provides suggestions based on user input.
 
 ## Author
-Your Name
+Bhavya Davane
