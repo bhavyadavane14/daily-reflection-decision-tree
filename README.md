@@ -17,5 +17,8 @@ This project is a deterministic decision tree designed to help users reflect on 
 ## Output
 The system asks questions and provides suggestions based on user input.
 
+## Chatbot
+Open preview.html in browser to interact with the decision tree chatbot.
+
 ## Author
 Bhavya Davane
